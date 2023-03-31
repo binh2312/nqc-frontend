@@ -1,11 +1,12 @@
 // ** React Import
-import { ReactElement } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
+import { useUserHooks } from "@hooks/index";
 
 // ** Icon Imports
 import Icon from '@core/components/icon'
@@ -84,88 +85,13 @@ const roleObj: RoleObj = {
   }
 }
 
-const statusObj: StatusObj = {
-  active: { color: 'success' },
-  pending: { color: 'warning' },
-  inactive: { color: 'secondary' }
-}
+// const statusObj: StatusObj = {
+//   active: { color: 'success' },
+//   pending: { color: 'warning' },
+//   inactive: { color: 'secondary' }
+// }
 
-const rows: TableBodyRowType[] = [
-  {
-    id: 1,
-    role: 'admin',
-    status: 'pending',
-    name: 'Jordan Stevenson',
-    username: '@jstevenson5c',
-    email: 'susanna.Lind57@gmail.com',
-    avatarSrc: '/images/avatars/1.png'
-  },
-  {
-    id: 2,
-    role: 'editor',
-    status: 'active',
-    name: 'Robert Crawford',
-    username: '@rcrawford1d',
-    avatarSrc: '/images/avatars/3.png',
-    email: 'estelle.Bailey10@gmail.com'
-  },
-  {
-    id: 3,
-    role: 'author',
-    status: 'inactive',
-    name: 'Lydia Reese',
-    username: '@lreese3b',
-    email: 'milo86@hotmail.com',
-    avatarSrc: '/images/avatars/2.png'
-  },
-  {
-    id: 4,
-    role: 'editor',
-    status: 'pending',
-    name: 'Richard Sims',
-    username: '@rsims6f',
-    email: 'lonnie35@hotmail.com',
-    avatarSrc: '/images/avatars/5.png'
-  },
-  {
-    id: 5,
-    status: 'active',
-    role: 'maintainer',
-    name: 'Lucile Young',
-    username: '@lyoung4a',
-    email: 'ahmad_Collins@yahoo.com',
-    avatarSrc: '/images/avatars/4.png'
-  },
-  {
-    id: 6,
-    role: 'editor',
-    status: 'pending',
-    name: 'Francis Frank',
-    username: '@ffrank7e',
-    avatarSrc: '/images/avatars/7.png',
-    email: 'tillman.Gleason68@hotmail.com'
-  },
-  {
-    id: 7,
-    role: 'subscriber',
-    status: 'inactive',
-    name: 'Phoebe Patterson',
-    email: 'otho21@gmail.com',
-    username: '@ppatterson2g',
-    avatarSrc: '/images/avatars/8.png'
-  },
-  {
-    id: 8,
-    status: 'active',
-    role: 'subscriber',
-    name: 'Curtis Underwood',
-    username: '@cunderwood8h',
-    avatarSrc: '/images/avatars/3.png',
-    email: 'florencio.Little@hotmail.com'
-  }
-]
-
-const renderUserAvatar = (row: TableBodyRowType) => {
+const renderUserAvatar = (row: any) => {
   if (row.avatarSrc) {
     return <CustomAvatar src={row.avatarSrc} sx={{ mr: 3, width: 34, height: 34 }} />
   } else {
@@ -180,22 +106,22 @@ const renderUserAvatar = (row: TableBodyRowType) => {
 const columns: GridColDef[] = [
   {
     flex: 0.3,
-    minWidth: 100,
+    minWidth: 250,
     field: 'ticket_no',
     headerName: 'Ticket No',
-    renderCell: ({ row }: CellType) => <Typography variant='body2'>test</Typography>
+    renderCell: ({ row }: CellType) => <Typography variant='body2'>{row.ticket_no}</Typography>
   },
   {
     flex: 0.3,
-    minWidth: 100,
+    minWidth: 250,
     field: 'created_at',
     headerName: 'Created At',
-    renderCell: ({ row }: CellType) => <Typography variant='body2'>test</Typography>
+    renderCell: ({ row }: CellType) => <Typography variant='body2'>{row.created_at}</Typography>
   },
   {
     flex: 0.25,
     field: 'name',
-    minWidth: 100,
+    minWidth: 250,
     headerName: 'User',
     renderCell: ({ row }: CellType) => {
       return (
@@ -214,71 +140,71 @@ const columns: GridColDef[] = [
     }
   },
   {
-    flex: 0.3,
-    minWidth: 100,
+    flex: 0.5,
+    minWidth: 250,
     field: 'test_case',
     headerName: 'Test Case',
-    renderCell: ({ row }: CellType) => <Typography variant='body2'>test</Typography>
+    renderCell: ({ row }: CellType) => <Typography variant='body2'>{row.test_case}</Typography>
   },
   {
-    flex: 0.3,
-    minWidth: 100,
+    flex: 0.5,
+    minWidth: 250,
     field: 'screen',
     headerName: 'Screen',
-    renderCell: ({ row }: CellType) => <Typography variant='body2'>test</Typography>
+    renderCell: ({ row }: CellType) => <Typography variant='body2'>{row.screen}</Typography>
   },
   {
-    flex: 0.3,
-    minWidth: 100,
+    flex: 0.5,
+    minWidth: 250,
     field: 'description',
     headerName: 'Description',
-    renderCell: ({ row }: CellType) => <Typography variant='body2'>test</Typography>
+    renderCell: ({ row }: CellType) => <Typography variant='body2'>{row.description}</Typography>
   },
   {
-    flex: 0.3,
-    minWidth: 100,
+    flex: 0.5,
+    minWidth: 250,
     field: 'type',
     headerName: 'Type',
-    renderCell: ({ row }: CellType) => <Typography variant='body2'>test</Typography>
+    renderCell: ({ row }: CellType) => <Typography variant='body2'>{row.type}</Typography>
   },
   {
-    flex: 0.3,
-    minWidth: 100,
+    flex: 0.5,
+    minWidth: 250,
     field: 'step',
     headerName: 'Step',
-    renderCell: ({ row }: CellType) => <Typography variant='body2'>test</Typography>
+    renderCell: ({ row }: CellType) => <Typography variant='body2'>{row.step}</Typography>
   },
   {
-    flex: 0.3,
-    minWidth: 100,
+    flex: 0.5,
+    minWidth: 250,
     field: 'due_date',
     headerName: 'Due Date',
-    renderCell: ({ row }: CellType) => <Typography variant='body2'>test</Typography>
+    renderCell: ({ row }: CellType) => <Typography variant='body2'>{row.due_date}</Typography>
   },
   {
-    flex: 0.3,
-    minWidth: 100,
+    flex: 0.5,
+    minWidth: 250,
     field: 'assign',
     headerName: 'Asignee',
-    renderCell: ({ row }: CellType) => <Typography variant='body2'>test</Typography>
+    renderCell: ({ row }: CellType) => <Typography variant='body2'>{row.assign}</Typography>
   },
   {
-    flex: 0.3,
-    minWidth: 100,
+    flex: 0.5,
+    minWidth: 250,
     field: 'in_charge',
     headerName: 'Person In Charge',
-    renderCell: ({ row }: CellType) => <Typography variant='body2'>test</Typography>
+    renderCell: ({ row }: CellType) => <Typography variant='body2'>{row.in_charge}</Typography>
   },
   {
-    flex: 0.3,
-    minWidth: 100,
+    flex: 0.5,
+    minWidth: 250,
     field: 'verify',
     headerName: 'Verify',
-    renderCell: ({ row }: CellType) => <Typography variant='body2'>test</Typography>
+    renderCell: ({ row }: CellType) => <Typography variant='body2'>{row.verify}</Typography>
   },
   {
-    flex: 0.15,
-    minWidth: 10,
+    flex: 0.5,
+    minWidth: 250,
     field: 'status',
     headerName: 'Status',
     renderCell: ({ row }: CellType) => (
@@ -286,28 +212,41 @@ const columns: GridColDef[] = [
         skin='light'
         size='small'
         label={row.status}
-        color={statusObj[row.status].color}
+        // color={statusObj[row.status].color}
         sx={{ textTransform: 'capitalize', '& .MuiChip-label': { px: 2.5, lineHeight: 1.385 } }}
       />
     )
   },
   {
-    flex: 0.3,
-    minWidth: 100,
+    flex: 0.5,
+    minWidth: 250,
     field: 'customer_verify',
     headerName: 'Customer Verify',
-    renderCell: ({ row }: CellType) => <Typography variant='body2'>test</Typography>
+    renderCell: ({ row }: CellType) => <Typography variant='body2'>{row.customer_verify}</Typography>
   },
   {
-    flex: 0.3,
-    minWidth: 100,
+    flex: 0.5,
+    minWidth: 250,
     field: 'finish',
     headerName: 'End Date',
-    renderCell: ({ row }: CellType) => <Typography variant='body2'>test</Typography>
+    renderCell: ({ row }: CellType) => <Typography variant='body2'>{row.finish}</Typography>
   },
 ]
 
 const CrmTable = () => {
+  const [rows, setRows] = useState([]);
+  // const { useFetchMe } = useUserHooks();
+
+  // const { data } = useFetchMe();
+
+  useEffect(() => {
+    let data = fetch("http://localhost:8000/api/get-issues").then((res) => {
+      const result = res.json().then((response) => {
+        setRows(response);
+      });
+      return result;
+    })   
+  },[])
   return (
     <Card>
       <DataGrid autoHeight hideFooter rows={rows} columns={columns} disableSelectionOnClick pagination={undefined} />

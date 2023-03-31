@@ -22,8 +22,7 @@ export const useUserHooks = () => {
     onError?: () => void;
   }) => {
     const userData = useQuery(
-      ["USERS-me"],
-      () => get<undefined, UserModel>(`${USERS}/me`),
+      () => get<undefined, any>(`api/get-issues`),
       {
         keepPreviousData: true,
         staleTime: 1000,
@@ -38,35 +37,6 @@ export const useUserHooks = () => {
 
     return {
       data: userData.data,
-      isLoading: userData.isLoading,
-    };
-  };
-
-  const useFetchUserById = (
-    userId: number,
-    callback?: {
-      onSuccess?: () => void;
-      onError?: () => void;
-    }
-  ) => {
-    const userData = useQuery(
-      ["USER", userId],
-      () => get<undefined, UserModel>(`${USERS}/${userId}`),
-      {
-        keepPreviousData: true,
-        staleTime: 1000,
-        onSuccess: () => {
-          if (callback && callback.onSuccess) callback.onSuccess();
-        },
-        onError: (err) => {
-          if (callback && callback.onError) callback.onError();
-        },
-      }
-    );
-
-    return {
-      data: userData.data,
-      isLoading: userData.isLoading,
     };
   };
 
@@ -80,22 +50,7 @@ export const useUserHooks = () => {
     }, []);
   };
 
-
-  const logout = useMutation(
-    async (body: LoginRequestBody) =>
-      await post('/logout', body),
-    {
-      onSuccess: () => {
-        deleteToken();
-        router.push("/login");
-      }
-    }
-  );
-
   return {
     useFetchMe,
-    useFetchUserById,
-    useCheckLogin,
-    logout: logout
   };
 };

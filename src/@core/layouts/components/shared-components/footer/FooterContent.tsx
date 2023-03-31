@@ -26,9 +26,6 @@ const FooterContent = () => {
           <Link target='_blank' href='https://themeforest.net/licenses/standard'>
             License
           </Link>
-          <Link target='_blank' href='https://1.envato.market/pixinvent_portfolio'>
-            More Themes
-          </Link>
           <Link
             target='_blank'
             href='https://pixinvent.com/demo/materialize-mui-react-nextjs-admin-template/documentation'

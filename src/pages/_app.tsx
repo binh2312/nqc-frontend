@@ -63,6 +63,7 @@ import 'iconify-bundle/icons-bundle-react'
 
 // ** Global css styles
 import '../styles/globals.css'
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // ** Extend App Props with Emotion
 type ExtendedAppProps = AppProps & {
@@ -100,7 +101,7 @@ const Guard = ({ children, authGuard, guestGuard }: GuardProps) => {
     return <AuthGuard fallback={<Spinner />}>{children}</AuthGuard>
   }
 }
-
+const queryClient = new QueryClient();
 // ** Configure JSS & ClassName
 const App = (props: ExtendedAppProps) => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
@@ -119,6 +120,7 @@ const App = (props: ExtendedAppProps) => {
   const aclAbilities = Component.acl ?? defaultACLObj
 
   return (
+    <QueryClientProvider client={queryClient}>
     <Provider store={store}>
       <CacheProvider value={emotionCache}>
         <Head>
@@ -155,6 +157,7 @@ const App = (props: ExtendedAppProps) => {
         </AuthProvider>
       </CacheProvider>
     </Provider>
+    </QueryClientProvider>
   )
 }
 
