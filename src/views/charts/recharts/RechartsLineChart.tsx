@@ -32,26 +32,30 @@ const RechartsLineChart = ({ direction }: Props) => {
   const [reportType, setReportType] = useState("all");
 
   useEffect(() => {
-  switch (reportType) {
-    case "all":
-      setData(InitialData);
-      break;
-    case "30":
-      setData(InitialData.slice(InitialData.length - 6));
-      break;
-    case "7":
-      setData(InitialData.slice(InitialData.length - 7));
-      break;
-    default:
-       setData(InitialData);
-      break;
-  }
+     fetch("http://localhost:8000/api/get-issues-total").then((res) => {
+      const result = res.json().then((response) => {
+        switch (reportType) {
+          case "all":
+            setData(response);
+            break;
+          case "30":
+            setData(response.slice(response.length - 30));
+            break;
+          case "7":
+            setData(response.slice(response.length - 7));
+            break;
+          default:
+             setData(response);
+            break;
+        }
+      });
+    })
   }, [reportType]);
 
   return (
+    <>
     <Card>
       <CardHeader
-        subheaderTypographyProps={{ sx: { color: theme => ${theme.palette.text.disabled} !important } }}
         sx={{
           flexDirection: ['column', 'row'],
           alignItems: ['flex-start', 'center'],
@@ -102,6 +106,7 @@ const RechartsLineChart = ({ direction }: Props) => {
         </Box>
       </CardContent>
     </Card>
+    </>
   )
 }
 
